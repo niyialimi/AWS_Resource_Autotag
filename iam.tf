@@ -77,6 +77,7 @@ data "aws_iam_policy_document" "lambda_inline_policy" {
       "kms:TagResource"
     ]
     resources = ["*"]
+  }
 
   statement {
     sid    = "AllowAdditionalActions"
