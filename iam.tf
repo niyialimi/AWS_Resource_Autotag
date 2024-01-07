@@ -77,6 +77,7 @@ data "aws_iam_policy_document" "lambda_inline_policy" {
       "kms:TagResource"
     ]
     resources = ["*"]
+  }
 
   statement {
     sid    = "AllowAdditionalActions"
@@ -125,4 +126,3 @@ data "aws_iam_policy_document" "cloudtrail_bucket_policy_doc" {
     resources = ["${aws_s3_bucket.cloudtrail_bucket[count.index].arn}/AWSLogs/*"]
   }
 }
-
