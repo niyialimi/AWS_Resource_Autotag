@@ -4,24 +4,20 @@ resource "aws_cloudwatch_event_rule" "resource_creation_rule" {
   description   = "Triggers Lambda when resources are created"
   event_pattern = <<EOF
     {
-      "source": ["aws.api"],
       "detail-type": ["AWS API Call via CloudTrail"],
       "detail": {
-          "eventSource": ["*"],
+          "eventSource": ["sns.amazonaws.com", "s3.amazonaws.com", "ec2.amazonaws.com", "iam.amazonaws.com"],
           "eventName": [
               "CreateTopic",
               "CreateBucket",
               "RunInstances",
-              "CreateRole",
-              "CreateDBInstance",
-              "CreateFunction",
-              "CreateLogGroup",
-              "CreateKey"
+              "CreateRole"
           ]
       }
     }
   EOF
 }
+
 
 #============ Eventbridge Targets ============
 resource "aws_cloudwatch_event_target" "lambda" {

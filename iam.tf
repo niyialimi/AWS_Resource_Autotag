@@ -83,6 +83,7 @@ data "aws_iam_policy_document" "lambda_inline_policy" {
     sid    = "AllowAdditionalActions"
     effect = "Allow"
     actions = [
+      "sns:ListTagsForResource",
       "iam:ListRoleTags",
       "iam:ListUserTags",
       "s3:GetBucketAcl",
