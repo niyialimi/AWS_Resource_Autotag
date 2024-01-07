@@ -54,6 +54,7 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
 resource "aws_iam_role" "lambda_exec_role" {
   name               = "lambda-autotag"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
+
   inline_policy {
     name   = "AutotagFunctionPermissions"
     policy = data.aws_iam_policy_document.lambda_inline_policy.json
@@ -61,30 +62,40 @@ resource "aws_iam_role" "lambda_exec_role" {
 }
 
 data "aws_iam_policy_document" "lambda_inline_policy" {
+  # Policies for broader permissions related to resource creation events
   statement {
-    sid    = "AllowTaggingOfSNSTopic"
+    sid    = "AllowTaggingOfResources"
     effect = "Allow"
     actions = [
-      "SNS:TagResource",
-      "iam:ListRoleTags",
-      "iam:ListUserTags"
+      "sns:TagResource",
+      "s3:PutBucketTagging",
+      "ec2:CreateTags",
+      "iam:TagRole",
+      "rds:AddTagsToResource",
+      "lambda:TagResource",
+      "logs:TagLogGroup",
+      "kms:TagResource"
     ]
     resources = ["*"]
-  }
+
   statement {
-    sid       = "AllowLambdaCreateLogGroup"
-    effect    = "Allow"
-    actions   = ["logs:CreateLogGroup"]
-    resources = ["arn:aws:logs:${var.aws_region}:*:log-group:*"]
-  }
-  statement {
-    sid    = "AllowLambdaCreateLogStreamsAndWriteEventLogs"
+    sid    = "AllowAdditionalActions"
     effect = "Allow"
     actions = [
+      "iam:ListRoleTags",
+      "iam:ListUserTags",
+      "s3:GetBucketAcl",
+      "s3:GetBucketTagging",
+      "ec2:DescribeTags",
+      "rds:ListTagsForResource",
+      "lambda:ListTags",
+      "kms:ListResourceTags",
+      "logs:ListTagsLogGroup",
       "logs:CreateLogStream",
-      "logs:PutLogEvents"
+      "logs:PutLogEvents",
+      "logs:CreateLogGroup"
     ]
-    resources = ["${aws_cloudwatch_log_group.lambda_log_grp.arn}:*"]
+    resources = ["*"]
   }
 }
 
