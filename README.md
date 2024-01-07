@@ -11,7 +11,7 @@ The Auto-Tagging setup uses AWS CloudTrail, AWS EventBridge, and a Lambda functi
 Before you begin, make sure you have the following:
 
 - [Terraform](https://www.terraform.io/) installed
-- AWS credentials configured locally
+- AWS credentials configured
 - Python and [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) for the Lambda function development
 
 ## Terraform Configurations
