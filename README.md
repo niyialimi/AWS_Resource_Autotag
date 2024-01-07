@@ -24,12 +24,13 @@ Before you begin, make sure you have the following:
 
 ### Terraform Files
 
-1. `variables.tf`: Input variable definitions.
-2. `cloudtrail.tf`: CloudTrail configuration for capturing management events.
-3. `eventbridge.tf`: EventBridge rules for triggering the Lambda function.
-4. `iam.tf`: IAM roles and policies for Lambda function execution.
-5. `lambda.tf`: Lambda function deployment and configuration.
-6. `lambda_function.py`: Python script for the Lambda function.
+1. `providers.tf`: plugins and version definitions.
+2. `variables.tf`: Input variable definitions.
+3. `cloudtrail.tf`: CloudTrail configuration for capturing management events.
+4. `eventbridge.tf`: EventBridge rules for triggering the Lambda function.
+5. `iam.tf`: IAM roles and policies for Lambda function execution.
+6. `lambda.tf`: Lambda function deployment and configuration.
+7. `lambda_function.py`: Python script for the Lambda function.
 
 ## Lambda Function
 
@@ -54,7 +55,3 @@ Ensure that the necessary Python dependencies are installed before deploying the
 
 - Review IAM policies to ensure least privilege.
 - Monitor CloudWatch Logs for security-related events.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
