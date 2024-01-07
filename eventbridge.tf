@@ -1,36 +1,44 @@
 #============ Eventbridge Rules ============#
-resource "aws_cloudwatch_event_rule" "sns_event_rule" {
-  name          = "rule-sns-topics"
-  description   = "Triggers Lambda when new sns topics are created"
+resource "aws_cloudwatch_event_rule" "resource_creation_rule" {
+  name          = "rule-resource-creation"
+  description   = "Triggers Lambda when resources are created"
   event_pattern = <<EOF
     {
-    "source": ["aws.sns"],
-    "detail-type": ["AWS API Call via CloudTrail"],
-    "detail": {
-        "eventSource" : ["sns.amazonaws.com"],
-        "eventName": ["CreateTopic"]
-    }
+      "source": ["aws.api"],
+      "detail-type": ["AWS API Call via CloudTrail"],
+      "detail": {
+          "eventSource": ["*"],
+          "eventName": [
+              "CreateTopic",
+              "CreateBucket",
+              "RunInstances",
+              "CreateRole",
+              "CreateDBInstance",
+              "CreateFunction",
+              "CreateLogGroup",
+              "CreateKey"
+          ]
+      }
     }
   EOF
 }
 
 #============ Eventbridge Targets ============
 resource "aws_cloudwatch_event_target" "lambda" {
-  rule       = aws_cloudwatch_event_rule.sns_event_rule.id
+  rule       = aws_cloudwatch_event_rule.resource_creation_rule.id
   target_id  = "SendToLambda"
   arn        = aws_lambda_function.autotag.arn
   depends_on = [aws_lambda_function.autotag]
 }
 
-resource "aws_lambda_permission" "event_brige_rule" {
+resource "aws_lambda_permission" "event_bridge_rule" {
   statement_id  = "AllowExecutionFromEventBridgeRule"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.autotag.function_name
   principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.sns_event_rule.arn
+  source_arn    = aws_cloudwatch_event_rule.resource_creation_rule.arn
   depends_on = [
     aws_lambda_function.autotag,
-    aws_cloudwatch_event_rule.sns_event_rule
+    aws_cloudwatch_event_rule.resource_creation_rule
   ]
 }
-
