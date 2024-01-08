@@ -67,35 +67,88 @@ data "aws_iam_policy_document" "lambda_inline_policy" {
     sid    = "AllowTaggingOfResources"
     effect = "Allow"
     actions = [
-      "sns:TagResource",
-      "s3:PutBucketTagging",
-      "ec2:CreateTags",
-      "iam:TagRole",
-      "rds:AddTagsToResource",
-      "lambda:TagResource",
-      "logs:TagLogGroup",
-      "kms:TagResource"
-    ]
-    resources = ["*"]
-  }
+      # DynamoDB
+      "dynamodb:TagResource",
+      "dynamodb:DescribeTable",
 
-  statement {
-    sid    = "AllowAdditionalActions"
-    effect = "Allow"
-    actions = [
-      "sns:ListTagsForResource",
-      "iam:ListRoleTags",
-      "iam:ListUserTags",
-      "s3:GetBucketAcl",
-      "s3:GetBucketTagging",
-      "ec2:DescribeTags",
-      "rds:ListTagsForResource",
+      # Lambdas
+      "lambda:TagResource",
       "lambda:ListTags",
+
+      # S3
+      "s3:GetBucketTagging",
+      "s3:PutBucketTagging",
+
+      # EC2
+      "ec2:CreateTags",
+      "ec2:DescribeNatGateways",
+      "ec2:DescribeInternetGateways",
+      "ec2:DescribeVolumes",
+      "ec2:DescribeVpcs",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeInstances",
+
+      # RDS
+      "rds:AddTagsToResource",
+      "rds:DescribeDBInstances",
+
+      # SNS
+      "sns:TagResource",
+
+      # SQS
+      "sqs:ListQueueTags",
+      "sqs:TagQueue",
+
+      # OpenSearch
+      "es:AddTags",
+
+      # KMS
       "kms:ListResourceTags",
-      "logs:ListTagsLogGroup",
+      "kms:TagResource",
+
+      # EFS
+      "elasticfilesystem:TagResource",
+      "elasticfilesystem:CreateTags",
+      "elasticfilesystem:DescribeTags",
+
+      # ELB
+      "elasticloadbalancing:AddTags",
+
+      # CloudWatch
+      "logs:CreateLogGroup",
       "logs:CreateLogStream",
       "logs:PutLogEvents",
-      "logs:CreateLogGroup"
+
+      # Redshift
+      "redshift:CreateTags",
+      "redshift-serverless:TagResource",
+
+      # Sagemaker
+      "sagemaker:AddTags",
+
+      # ECS
+      "ecs:TagResource",
+
+      # MSK
+      "kafka:TagResource",
+
+      # CloudWatch logs and alarms
+      "logs:TagLogGroup",
+      "cloudwatch:TagResource",
+
+      # Amazon MQ
+      "mq:CreateTags",
+
+      # Resource Group Tag Editor
+      "tag:getResources",
+      "tag:getTagKeys",
+      "tag:getTagValues",
+      "tag:TagResources",
+      "tag:UntagResources",
+      "cloudformation:DescribeStacks",
+      "cloudformation:ListStackResources",
+      "resource-groups:*",
     ]
     resources = ["*"]
   }
