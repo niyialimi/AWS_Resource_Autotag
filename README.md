@@ -2,6 +2,8 @@
 
 This repository contains Terraform configurations and a Lambda function to implement automatic resource tagging in AWS.
 
+<p align="center"><a href="https://niyialimi.medium.com/automating-aws-resource-tagging-a-terraform-and-lambda-approach-60716c170826" target="_blank"><img align="center" src="images/autotagging.jpg"></a></p>
+
 ## Overview
 
 The Auto-Tagging setup uses AWS CloudTrail, AWS EventBridge, and a Lambda function to tag resources when they are created. The Lambda function is written in Python and uses the Boto3 library to interact with various AWS services.
