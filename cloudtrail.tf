@@ -1,7 +1,7 @@
 #================ Cloudtrail ==================#
 resource "aws_cloudtrail" "cloudtrail_autotag" {
   count                      = var.create_trail ? 1 : 0
-  name                       = "autotag-trail"
+  name                       = "${var.autotag_function_name}-trail"
   s3_bucket_name             = aws_s3_bucket.cloudtrail_bucket[count.index].id
   enable_log_file_validation = true
   cloud_watch_logs_role_arn  = aws_iam_role.lambda_exec_role.arn
@@ -17,7 +17,7 @@ resource "aws_cloudtrail" "cloudtrail_autotag" {
 #============ Cloudtrail S3 Bucket ============#
 resource "random_pet" "cloudtrail_bucket_name" {
   count  = var.create_trail ? 1 : 0
-  prefix = "cloudtrail-autotag"
+  prefix = "${var.autotag_function_name}-trail"
 }
 
 resource "aws_s3_bucket" "cloudtrail_bucket" {

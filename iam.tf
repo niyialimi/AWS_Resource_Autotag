@@ -52,7 +52,7 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
 }
 
 resource "aws_iam_role" "lambda_exec_role" {
-  name               = "lambda-autotag"
+  name               = "lambda-${var.autotag_function_name}"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
 
   inline_policy {

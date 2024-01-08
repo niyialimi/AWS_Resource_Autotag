@@ -1,6 +1,6 @@
 #============ Eventbridge Rules ============#
 resource "aws_cloudwatch_event_rule" "resource_creation_rule" {
-  name          = "rule-resource-creation"
+  name          = "${var.autotag_function_name}-event-rule"
   description   = "Triggers Lambda when resources are created"
   event_pattern = <<EOF
 {
