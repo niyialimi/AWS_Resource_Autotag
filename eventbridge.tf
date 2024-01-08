@@ -23,8 +23,7 @@ resource "aws_cloudwatch_event_rule" "resource_creation_rule" {
     "aws.monitoring", 
     "aws.logs", 
     "aws.kafka", 
-    "aws.amazonmq",
-    "aws.iam"
+    "aws.amazonmq"
   ],
   "detail-type": ["AWS API Call via CloudTrail"],
   "detail": {
@@ -47,8 +46,7 @@ resource "aws_cloudwatch_event_rule" "resource_creation_rule" {
       "monitoring.amazonaws.com",
       "logs.amazonaws.com",
       "kafka.amazonaws.com",
-      "amazonmq.amazonaws.com",
-      "iam.amazonaws.com"
+      "amazonmq.amazonaws.com"
     ],
     "eventName": [
       "RunInstances",
@@ -86,10 +84,7 @@ resource "aws_cloudwatch_event_rule" "resource_creation_rule" {
       "CreateTrainingJob",
       "CreateTransformJob",
       "CreateUserProfile",
-      "CreateWorkteam",
-      "CreateRole",
-      "CreatePolicy",
-      "CreateUser"
+      "CreateWorkteam"
     ]
   }
 }
