@@ -313,6 +313,29 @@ def aws_amazonmq(event):
         arnList.append('arn:aws:mq:{}:{}:broker:{}'.format(event['region'], event['account'], _brokerId))
     return arnList
 
+def aws_iam(event):
+    arnList = []
+    _account = event['account']
+    iamRoleArnTemplate = 'arn:aws:iam::@account@:role/@roleName@'
+    iamPolicyArnTemplate = 'arn:aws:iam::@account@:policy/@policyName@'
+    iamUserArnTemplate = 'arn:aws:iam::@account@:user/@userName@'
+    
+    if event['detail']['eventName'] == 'CreateRole':
+        print("tagging for new IAM Role...")
+        roleName = event['detail']['requestParameters']['roleName']
+        arnList.append(iamRoleArnTemplate.replace('@account@', _account).replace('@roleName@', roleName))
+        
+    elif event['detail']['eventName'] == 'CreatePolicy':
+        print("tagging for new IAM Policy...")
+        policyName = event['detail']['requestParameters']['policyName']
+        arnList.append(iamPolicyArnTemplate.replace('@account@', _account).replace('@policyName@', policyName))
+        
+    elif event['detail']['eventName'] == 'CreateUser':
+        print("tagging for new IAM User...")
+        userName = event['detail']['requestParameters']['userName']
+        arnList.append(iamUserArnTemplate.replace('@account@', _account).replace('@userName@', userName))
+    return arnList
+
 def aws_glue(event):
     arnList = []
     if event['detail']['eventName'] == 'CreateNamespace' and event['source'] == 'aws.glue':

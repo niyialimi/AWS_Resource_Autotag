@@ -1,7 +1,7 @@
 #============ Eventbridge Rules ============#
 resource "aws_cloudwatch_event_rule" "resource_creation_rule" {
-  name        = "rule-resource-creation"
-  description = "Triggers Lambda when resources are created"
+  name          = "rule-resource-creation"
+  description   = "Triggers Lambda when resources are created"
   event_pattern = <<EOF
 {
   "source": [
@@ -23,7 +23,8 @@ resource "aws_cloudwatch_event_rule" "resource_creation_rule" {
     "aws.monitoring", 
     "aws.logs", 
     "aws.kafka", 
-    "aws.amazonmq"
+    "aws.amazonmq",
+    "aws.iam"
   ],
   "detail-type": ["AWS API Call via CloudTrail"],
   "detail": {
@@ -46,7 +47,8 @@ resource "aws_cloudwatch_event_rule" "resource_creation_rule" {
       "monitoring.amazonaws.com",
       "logs.amazonaws.com",
       "kafka.amazonaws.com",
-      "amazonmq.amazonaws.com"
+      "amazonmq.amazonaws.com",
+      "iam.amazonaws.com"
     ],
     "eventName": [
       "RunInstances",
@@ -61,8 +63,8 @@ resource "aws_cloudwatch_event_rule" "resource_creation_rule" {
       "CreateLoadBalancer",
       "CreateInternetGateway",
       "CreateNatGateway",
-      "AllocateAddress", 
-      "CreateVpcEndpoint", 
+      "AllocateAddress",
+      "CreateVpcEndpoint",
       "CreateTransitGateway",
       "CreateMountTarget",
       "CreateDomain",
@@ -84,7 +86,10 @@ resource "aws_cloudwatch_event_rule" "resource_creation_rule" {
       "CreateTrainingJob",
       "CreateTransformJob",
       "CreateUserProfile",
-      "CreateWorkteam"
+      "CreateWorkteam",
+      "CreateRole",
+      "CreatePolicy",
+      "CreateUser"
     ]
   }
 }

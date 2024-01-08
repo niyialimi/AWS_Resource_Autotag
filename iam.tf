@@ -140,6 +140,11 @@ data "aws_iam_policy_document" "lambda_inline_policy" {
       # Amazon MQ
       "mq:CreateTags",
 
+      # IAM
+      "iam:TagRole",
+      "iam:TagPolicy",
+      "iam:TagUser",
+
       # Resource Group Tag Editor
       "tag:getResources",
       "tag:getTagKeys",
